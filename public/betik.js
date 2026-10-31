@@ -18,6 +18,13 @@ const turAdlari = {
 };
 
 const kartlarAlani = document.getElementById("kartlar");
+const durumIletisi = document.getElementById("durum-iletisi");
+const filtreDugmeleri = document.querySelectorAll(".filtre");
+const aramaKutusu = document.getElementById("arama-kutusu");
+
+// Kullanıcının o anki seçimleri
+let seciliTur = "tumu";
+let aramaMetni = "";
 
 // Tek bir etkinlik için kart öğesi oluşturur
 function kartOlustur(etkinlik) {
@@ -56,4 +63,41 @@ function kartlariCiz(liste) {
   }
 }
 
-kartlariCiz(etkinlikler);
+// Tür filtresini ve aramayı birlikte uygulayıp sonucu çizer
+function filtreleVeCiz() {
+  const aranan = aramaMetni.trim().toLocaleLowerCase("tr-TR");
+
+  const sonuc = etkinlikler.filter(function (etkinlik) {
+    const turUygun = seciliTur === "tumu" || etkinlik.tur === seciliTur;
+    const baslikUygun = etkinlik.baslik.toLocaleLowerCase("tr-TR").includes(aranan);
+    return turUygun && baslikUygun;
+  });
+
+  kartlariCiz(sonuc);
+
+  if (sonuc.length === 0) {
+    durumIletisi.textContent = "Aramanıza uygun etkinlik yok.";
+  } else {
+    durumIletisi.textContent = "";
+  }
+}
+
+// Filtre düğmeleri: tıklanan düğmeyi seçili yap ve listeyi yenile
+for (const dugme of filtreDugmeleri) {
+  dugme.addEventListener("click", function () {
+    for (const d of filtreDugmeleri) {
+      d.classList.remove("secili");
+    }
+    dugme.classList.add("secili");
+    seciliTur = dugme.dataset.tur;
+    filtreleVeCiz();
+  });
+}
+
+// Arama kutusu: her harf yazıldığında listeyi yenile
+aramaKutusu.addEventListener("input", function () {
+  aramaMetni = aramaKutusu.value;
+  filtreleVeCiz();
+});
+
+filtreleVeCiz();
