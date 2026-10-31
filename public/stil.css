@@ -1,0 +1,228 @@
+/* ---------- Renk ve boşluk değişkenleri ---------- */
+:root {
+  --ana-renk: #c2185b;        /* düğmeler, logo, vurgu */
+  --ana-renk-koyu: #8e0f42;   /* üzerine gelince */
+  --zemin: #f7f4f8;           /* sayfa arka planı */
+  --kart-zemin: #ffffff;
+  --yazi: #222222;
+  --soluk-yazi: #555555;
+  --hata: #b00020;
+  --basari: #1b6e2d;
+  --bosluk: 16px;
+  --kose: 10px;
+}
+
+/* ---------- Genel ayarlar ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, "Segoe UI", Arial, sans-serif;
+  background: var(--zemin);
+  color: var(--yazi);
+  line-height: 1.5;
+}
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--bosluk);
+}
+
+/* ---------- Üst bant (Flexbox) ---------- */
+.ust-bant {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--bosluk) calc(var(--bosluk) * 2);
+  background: var(--ana-renk);
+}
+
+.logo {
+  color: #ffffff;
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.ust-bant nav ul {
+  display: flex;
+  gap: var(--bosluk);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ust-bant nav a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.ust-bant nav a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Filtre düğmeleri ve arama (Flexbox) ---------- */
+.arac-cubugu {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--bosluk);
+  margin-bottom: var(--bosluk);
+}
+
+.filtreler {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filtre {
+  padding: 8px 16px;
+  border: 2px solid var(--ana-renk);
+  border-radius: 20px;
+  background: var(--kart-zemin);
+  color: var(--ana-renk);
+  font: inherit;
+  cursor: pointer;
+}
+
+.filtre:hover {
+  background: #fce4ec;
+}
+
+.filtre.secili {
+  background: var(--ana-renk);
+  color: #ffffff;
+}
+
+.arama {
+  display: flex;
+  flex-direction: column;
+}
+
+.arama input {
+  padding: 8px 12px;
+  border: 1px solid #999999;
+  border-radius: var(--kose);
+  font: inherit;
+  min-width: 240px;
+}
+
+/* ---------- Etkinlik kartları (Grid) ---------- */
+.kartlar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--bosluk);
+}
+
+.kart {
+  background: var(--kart-zemin);
+  border-radius: var(--kose);
+  padding: var(--bosluk);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-top: 4px solid var(--ana-renk);
+}
+
+.kart h3 {
+  margin: 8px 0;
+}
+
+.kart p {
+  margin: 4px 0;
+  color: var(--soluk-yazi);
+}
+
+.etiket {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  color: #ffffff;
+  background: var(--ana-renk);
+}
+
+.durum {
+  font-weight: bold;
+  color: var(--soluk-yazi);
+}
+
+/* ---------- Etkinlik öner formu ---------- */
+#oneri {
+  margin-top: calc(var(--bosluk) * 2);
+  background: var(--kart-zemin);
+  padding: var(--bosluk);
+  border-radius: var(--kose);
+}
+
+.form-alani {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+  max-width: 400px;
+}
+
+.form-alani input {
+  padding: 8px;
+  border: 1px solid #999999;
+  border-radius: 6px;
+  font: inherit;
+}
+
+#oneri-formu button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--kose);
+  background: var(--ana-renk);
+  color: #ffffff;
+  font: inherit;
+  cursor: pointer;
+}
+
+#oneri-formu button:hover {
+  background: var(--ana-renk-koyu);
+}
+
+.hata {
+  color: var(--hata);
+  font-weight: bold;
+}
+
+.basari {
+  color: var(--basari);
+  font-weight: bold;
+}
+
+/* ---------- Alt bilgi ---------- */
+footer {
+  text-align: center;
+  padding: var(--bosluk);
+  color: var(--soluk-yazi);
+}
+
+/* ---------- Duyarlı tasarım: dar ekranlar ---------- */
+@media (max-width: 700px) {
+  .ust-bant,
+  .arac-cubugu {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .ust-bant {
+    text-align: center;
+  }
+
+  .ust-bant nav ul {
+    justify-content: center;
+  }
+
+  .arama input {
+    min-width: 0;
+    width: 100%;
+  }
+}
