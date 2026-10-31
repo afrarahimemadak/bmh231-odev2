@@ -101,3 +101,49 @@ aramaKutusu.addEventListener("input", function () {
 });
 
 filtreleVeCiz();
+
+// ---------- Etkinlik Öner formu: doğrulama ----------
+const oneriFormu = document.getElementById("oneri-formu");
+const formIletisi = document.getElementById("form-iletisi");
+
+oneriFormu.addEventListener("submit", function (olay) {
+  olay.preventDefault();   // sayfanın yenilenmesini (formun gönderilmesini) durdur
+
+  const ad = oneriFormu.ad.value.trim();
+  const tarih = oneriFormu.tarih.value;
+  const eposta = oneriFormu.eposta.value.trim();
+  const hatalar = [];
+
+  // 1) Etkinlik adı en az 5 karakter olmalı
+  if (ad.length < 5) {
+    hatalar.push("Etkinlik adı en az 5 karakter olmalıdır.");
+  }
+
+  // 2) Tarih boş ya da geçmiş bir gün olamaz
+  if (tarih === "") {
+    hatalar.push("Lütfen bir tarih seçiniz.");
+  } else {
+    const secilenGun = new Date(tarih + "T00:00:00");
+    const bugun = new Date();
+    bugun.setHours(0, 0, 0, 0);
+    if (secilenGun < bugun) {
+      hatalar.push("Geçmiş bir tarih seçilemez.");
+    }
+  }
+
+  // 3) E-posta "ad@alan.uzanti" biçiminde olmalı
+  const epostaKalibi = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!epostaKalibi.test(eposta)) {
+    hatalar.push("Geçerli bir e-posta adresi giriniz.");
+  }
+
+  // Sonucu formun altında göster
+  if (hatalar.length > 0) {
+    formIletisi.className = "hata";
+    formIletisi.textContent = hatalar.join("\n");
+  } else {
+    formIletisi.className = "basari";
+    formIletisi.textContent = "Teşekkürler! \"" + ad + "\" önerin alındı.";
+    oneriFormu.reset();
+  }
+});

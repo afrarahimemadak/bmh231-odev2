@@ -226,3 +226,8 @@ footer {
     width: 100%;
   }
 }
+
+/* Birden çok hata iletisinin alt alta görünmesi için */
+#form-iletisi {
+  white-space: pre-line;
+}
